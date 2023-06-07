@@ -1,0 +1,80 @@
+body {
+    background-color: rgb(231, 230, 230);
+    text-align: center;
+    scroll-behavior: smooth;
+}
+
+.welcome {
+    margin-top: 5vh;
+    font-weight: bold;
+    width: 100%;
+    border-bottom: 1px dotted #000;
+    ;
+}
+
+.form {
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 20vw;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5vh;
+}
+
+.content {
+    margin-top: 5vh;
+    height: auto;
+    justify-content: center;
+    width: 50vw;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    border: 1px black solid;
+    border-radius: 10px;
+    padding: 2vh;
+}
+
+.validation {
+    margin-top: 5vh;
+    height: auto;
+    justify-content: center;
+    width: 50vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.lead {
+    font-size: 1.5em;
+}
+
+.creatorButton {
+    padding: 1vh;
+    border-radius: 10px;
+    margin: 10px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+
+/* bootstrap maakt .row te groot, dit fixt dat */
+.row {
+    max-width: 100%;
+}
+
+.balk {
+    background-color: #292b2c;
+    color: white;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    background-color: rgb(231, 230, 230);
+}
+
+/* scrollbar itself */
+::-webkit-scrollbar-thumb {
+    background-color: #292b2c
+}
