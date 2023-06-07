@@ -1,6 +1,6 @@
 <p align="center">
     <img 
-        src="https://github.com/JustPeter64/Trivia-it/blob/readMe/public/assets/trivia-logo.png" 
+        src="https://github.com/JustPeter64/Trivia-it/master/public/assets/trivia-logo.png" 
         width="400" 
         alt="Trivia it! Logo"
     >
