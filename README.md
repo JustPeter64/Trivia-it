@@ -1,3 +1,15 @@
+<p align="center">
+    <img 
+        src="https://github.com/JustPeter64/Trivia-it/blob/readMe/public/assets/trivia-logo.png" 
+        width="400" 
+        alt="Trivia it! Logo"
+    >
+</p>
+
+## Trivia it!
+Een applicatie waarop users quizzen kunnen maken en spelen.
+Maak leuke quizzen van jouw grappige ideeën!
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
