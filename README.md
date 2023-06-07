@@ -1,7 +1,10 @@
 <p align="center">
-<img 
-src="./public/images/trivia-logo.png"
-width="400" alt="Trivia-it Logo"></a></p>
+    <img 
+        src="https://github.com/JustPeter64/Trivia-it/blob/readMe/public/assets/trivia-logo.png" 
+        width="400" 
+        alt="Trivia it! Logo"
+    >
+</p>
 
 ## Trivia it!
 Een applicatie waarop users quizzen kunnen maken en spelen.
