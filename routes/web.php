@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-
-
 //root route
 //////////////////
 Route::get('/', function () {
@@ -95,9 +93,10 @@ Route::get('quiz/{id}', function ($id) {
     return view('quizzen.quiz', ['quiz' => $quiz]);
 })->name('quizzen.quiz');
 
-Route::get('quizzen/', function () {
-    return view('quizzen.index');
-})->name('quizzen.index');
+Route::get('quizzen/', [
+    'uses' => 'App\Http\Controllers\QuizController@getIndex',
+    'as' => 'quizzen.index'
+]);
 
 //other routes
 //////////////////
