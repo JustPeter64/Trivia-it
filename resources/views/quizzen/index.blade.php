@@ -12,6 +12,7 @@
             <div class="col-md-12">
                 <h2>{{ $quiz['title'] }}</h2>
                 <p>{{ $quiz['description'] }}</p>
+                <p>{{ $quiz['content'] }}</p>
                 <p><a href="{{ route('quizzen.quiz', ['id' => array_search($quiz, $quizzes)]) }}">Start Quiz</a></p>
             </div>
         </div>

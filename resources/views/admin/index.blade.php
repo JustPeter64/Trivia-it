@@ -19,16 +19,15 @@
         <div class="col-md-6">
             <a href="{{ route('admin.create') }}" class="btn btn-success creatorButton">Creator</a>
         </div>
-        {{-- <div class="col-md-6">
-            <a href="{{ route('admin.index') }}" class="btn btn-warning creatorButton">Editor</a>
-        </div> --}}
     </div>
-    <div class="row content">
-        <div class="col-md-12">
-            <p>
-                <strong>Quiz1</strong>
-                <a href="{{ route('admin.edit', ['id' => 1]) }}" class="btn btn-warning">Edit</a>
-            </p>
+    @foreach ($quizzes as $quiz)
+        <div class="row content">
+            <div class="col-md-12">
+                <p>
+                    <strong>{{ $quiz['title'] }}</strong>
+                    <a href="{{ route('admin.edit', ['id' => array_search($quiz, $quizzes)]) }}" class="btn btn-warning">Edit</a>
+                </p>
+            </div>
         </div>
-    </div>
+    @endforeach
 @endsection

@@ -40,6 +40,7 @@
                 </textarea>
                 </div>  
                 {{ csrf_field() }}
+                <input type="hidden" name="id" value="{{ $quizId }}">
                 <button type="submit" class="btn btn-primary">Create</button>
             </form>
         </div>

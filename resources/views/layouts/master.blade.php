@@ -18,6 +18,9 @@
         <!-- Style -->
         <link rel="stylesheet" href="{{ URL::to('css/styles.css') }}">
 
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="{{ URL::to('favicon.jpg') }}" type="image/x-icon">
+
     </head>
     <body>
 

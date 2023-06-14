@@ -9,7 +9,7 @@
         @include('partials.errors')
 
         <div class="col-md-12">
-            <form action="{{ route('admin.make') }}" method="post" class="form">
+            <form action="{{ route('admin.create') }}" method="post" class="form">
                 <div class="form-group">
                     <label for="title">Title:</label>
                     <input type="text" name="title" id="title" class="form-control">
