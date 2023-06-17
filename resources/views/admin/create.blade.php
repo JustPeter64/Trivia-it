@@ -20,8 +20,7 @@
                 </div>
                 <div class="form-group">
                     <label for="content">content:</label>
-                    <textarea name="content" id="content" class="form-control">
-                </textarea>
+                    <textarea name="content" id="content" class="form-control"></textarea>
                 </div>
                 {{ csrf_field() }}
                 <button type="submit" class="btn btn-primary">Create</button>

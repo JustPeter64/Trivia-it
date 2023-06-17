@@ -17,31 +17,31 @@
                     name="title" 
                     id="title" 
                     class="form-control"
-                    value="{{ $quiz['title'] }}"
+                    value="{{ $quiz->title }}"
                     >
                 </div>
-                <div class="form-group">
+                {{-- <div class="form-group">
                     <label for="description">Description:</label>
                     <input 
                     type="text"
                     name="description" 
                     id="description"
                     class="form-control"
-                    value="{{ $quiz['description'] }}"
+                    value="{{ $quiz->description }}"
                     >
-                </div>
+                </div> --}}
                 <div class="form-group">
                     <label for="content">content:</label>
                     <textarea
                     name="content"
                     id="content"
                     class="form-control"
-                    >{{ $quiz['content'] }}
+                    >{{ $quiz->content }}
                 </textarea>
                 </div>  
                 {{ csrf_field() }}
                 <input type="hidden" name="id" value="{{ $quizId }}">
-                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="submit" class="btn btn-primary">Update</button>
             </form>
         </div>
     </div>

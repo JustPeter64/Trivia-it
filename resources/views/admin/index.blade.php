@@ -17,15 +17,16 @@
     @endif
     <div class="row content">
         <div class="col-md-6">
-            <a href="{{ route('admin.create') }}" class="btn btn-success creatorButton">Creator</a>
+            <a href="{{ route('admin.create') }}" class="btn btn-success creatorButton">Create</a>
         </div>
     </div>
     @foreach ($quizzes as $quiz)
         <div class="row content">
             <div class="col-md-12">
                 <p>
-                    <strong>{{ $quiz['title'] }}</strong>
-                    <a href="{{ route('admin.edit', ['id' => array_search($quiz, $quizzes)]) }}" class="btn btn-warning">Edit</a>
+                    <strong>{{ $quiz->title }}</strong>
+                    <a href="{{ route('admin.edit', ['id' => $quiz->id ]) }}" class="btn btn-warning">Edit</a>
+                    <a href="{{ route('admin.delete', ['id' => $quiz->id ]) }}" class="btn btn-danger">Delete</a>
                 </p>
             </div>
         </div>

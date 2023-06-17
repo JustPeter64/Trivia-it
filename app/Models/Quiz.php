@@ -4,6 +4,8 @@ use illuminate\Database\Eloquent\Model;
 
 class Quiz extends Model
 {
+    protected $fillable = ['title', 'content'];
+
     //All quizzes opvragen
     public function getQuizzes($session)
     {
