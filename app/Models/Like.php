@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Like extends Model
 {
     use HasFactory;
+
+    public function quiz()
+    {
+        return $this->belongsTo('App\Models\Quiz', 'quiz_id');
+    }
 }

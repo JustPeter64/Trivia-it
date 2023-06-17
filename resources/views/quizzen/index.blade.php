@@ -11,6 +11,10 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>{{ $quiz->title }}</h2>
+                <p style="font-style: italic;"><b>Tags:</b>
+                    @foreach ($quiz->tags as $tag)
+                        {{ $tag->name }}{{ $loop->last ? '' : ', ' }}
+                    @endforeach
                 <p>{{ $quiz->description }}</p>
                 <p>{{ $quiz->content }}</p>
                 <p><a href="{{ route('quizzen.quiz', ['id' => $quiz->id]) }}">Start Quiz</a></p>

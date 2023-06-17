@@ -12,13 +12,7 @@
             <form action="{{ route('admin.update') }}" method="post" class="form">
                 <div class="form-group">
                     <label for="title">Title:</label>
-                    <input 
-                    type="text" 
-                    name="title" 
-                    id="title" 
-                    class="form-control"
-                    value="{{ $quiz->title }}"
-                    >
+                    <input type="text" name="title" id="title" class="form-control" value="{{ $quiz->title }}">
                 </div>
                 {{-- <div class="form-group">
                     <label for="description">Description:</label>
@@ -32,13 +26,28 @@
                 </div> --}}
                 <div class="form-group">
                     <label for="content">content:</label>
-                    <textarea
-                    name="content"
-                    id="content"
-                    class="form-control"
-                    >{{ $quiz->content }}
+                    <textarea 
+                        name="content" 
+                        id="content" 
+                        class="form-control"
+                    >
+                    {{ $quiz->content }}
                 </textarea>
-                </div>  
+                    @foreach ($tags as $tag)
+                        <div class="checkbox">
+                            <label>
+                                <input 
+                                    type="checkbox"
+                                    name="tags[]" 
+                                    value="{{ $tag->id }}"
+                                    {{ 
+                                        $quiz->tags->contains($tag->id) ? 'checked' : '' 
+                                    }}
+                                > 
+                                    {{ $tag->name }}
+                            </label>
+                    @endforeach
+                </div>
                 {{ csrf_field() }}
                 <input type="hidden" name="id" value="{{ $quizId }}">
                 <button type="submit" class="btn btn-primary">Update</button>

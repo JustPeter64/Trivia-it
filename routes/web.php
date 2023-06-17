@@ -62,6 +62,12 @@ Route::get('quiz/{id}', [
     'as' => 'quizzen.quiz'
 ]);
 
+//like routes
+Route::get('quiz/{id}/like', [
+    'uses' => 'App\Http\Controllers\AdminController@getLikeQuiz',
+    'as' => 'quizzen.quiz.like'
+]);
+
 Route::get('quizzen/', [
     'uses' => 'App\Http\Controllers\AdminController@getIndex',
     'as' => 'quizzen.index'
