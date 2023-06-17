@@ -10,15 +10,6 @@
                 <a class="nav-link" href="/">Creator</a>
                 <a class="nav-link" href="{{ route('other.about') }}">About</a>
             </div>
-            <div class="navbar-nav">
-                @if (Auth::check())
-                    <a class="nav-link" href="/">Profile</a>
-                    <a class="nav-link" href="/">Logout</a>
-                @else
-                    <a class="nav-link" href="/">Register</a>
-                    <a class="nav-link" href="{{ route('account.login') }}">Login</a>
-                @endif
-            </div>
         </div>
     </div>
 </nav>

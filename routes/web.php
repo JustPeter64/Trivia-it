@@ -49,11 +49,6 @@ Route::get('creator', function () {
     return view('creator.index');
 })->name('creator.index');
 
-//account routes
-//////////////////
-Route::get('account/login', function () {
-    return view('account.login');
-})->name('account.login');
 
 //quiz routes
 //////////////////
@@ -78,3 +73,6 @@ Route::get('quizzen/', [
 Route::get('about', function () {
     return view('other.about');
 })->name('other.about');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
