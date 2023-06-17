@@ -8,12 +8,12 @@ use App\Models\Tag;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
-class AdminController extends Controller
+class QuizController extends Controller
 {
     //All quizzes opvragen
     public function getIndex()
     {
-        $quizzes = Quiz::orderBy('created_at', 'desc')->get();
+        $quizzes = Quiz::orderBy('created_at', 'desc')->paginate(3);
         return view('quizzen.index', ['quizzes' => $quizzes]);
     }
 

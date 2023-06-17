@@ -12,32 +12,32 @@ Route::get('/', function () {
 //////////////////
 Route::group(['prefix' => 'admin'], function () {
     Route::get('', [
-        'uses' => 'App\Http\Controllers\AdminController@getAdminIndex',
+        'uses' => 'App\Http\Controllers\QuizController@getAdminIndex',
         'as' => 'admin.index'
     ]);
     
     Route::get('create', [
-        'uses' => 'App\Http\Controllers\AdminController@getAdminCreate',
+        'uses' => 'App\Http\Controllers\QuizController@getAdminCreate',
         'as' => 'admin.create'
     ]);
 
     Route::post('create', [
-        'uses' => 'App\Http\Controllers\AdminController@postAdminCreate',
+        'uses' => 'App\Http\Controllers\QuizController@postAdminCreate',
         'as' => 'admin.create'
     ]);
 
     Route::get('delete/{id}', [
-        'uses' => 'App\Http\Controllers\AdminController@getAdminDelete',
+        'uses' => 'App\Http\Controllers\QuizController@getAdminDelete',
         'as' => 'admin.delete'
     ]);
 
     Route::get('edit/{id}', [
-        'uses' => 'App\Http\Controllers\AdminController@getAdminUpdate',
+        'uses' => 'App\Http\Controllers\QuizController@getAdminUpdate',
         'as' => 'admin.edit'
     ]);
 
     Route::post('edit', [
-        'uses' => 'App\Http\Controllers\AdminController@postAdminUpdate',
+        'uses' => 'App\Http\Controllers\QuizController@postAdminUpdate',
         'as' => 'admin.update'
     ]);
 });
@@ -58,18 +58,18 @@ Route::get('account/login', function () {
 //quiz routes
 //////////////////
 Route::get('quiz/{id}', [
-    'uses' => 'App\Http\Controllers\AdminController@getQuiz',
+    'uses' => 'App\Http\Controllers\QuizController@getQuiz',
     'as' => 'quizzen.quiz'
 ]);
 
 //like routes
 Route::get('quiz/{id}/like', [
-    'uses' => 'App\Http\Controllers\AdminController@getLikeQuiz',
+    'uses' => 'App\Http\Controllers\QuizController@getLikeQuiz',
     'as' => 'quizzen.quiz.like'
 ]);
 
 Route::get('quizzen/', [
-    'uses' => 'App\Http\Controllers\AdminController@getIndex',
+    'uses' => 'App\Http\Controllers\QuizController@getIndex',
     'as' => 'quizzen.index'
 ]);
 

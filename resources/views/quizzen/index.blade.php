@@ -22,4 +22,10 @@
         </div>
         <hr>
     @endforeach
+    {{-- pagination --}}
+    <div class="row">
+        <div class="col-md-12 text-center d-flex justify-content-center">
+            {{ $quizzes->Links('pagination::bootstrap-4') }}
+        </div>
+    </div>
 @endsection

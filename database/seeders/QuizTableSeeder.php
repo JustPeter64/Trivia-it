@@ -23,5 +23,30 @@ class QuizTableSeeder extends Seeder
             'content' => 'Test je kennis over geschiedenis',
         ]);
         $quiz->save();
+
+        $quiz = new \App\Models\Quiz([
+            'title' => 'Geografie Quiz',
+            'content' => 'Test je kennis over geografie',
+        ]);
+        $quiz->save();
+
+        $quiz = new \App\Models\Quiz([
+            'title' => 'Sport Quiz',
+            'content' => 'Test je kennis over sport',
+        ]);
+        $quiz->save();
+
+        $quiz = new \App\Models\Quiz([
+            'title' => 'Wetenschap Quiz',
+            'content' => 'Test je kennis over wetenschap',
+        ]);
+        $quiz->save();
+
+        $quiz = new \App\Models\Quiz([
+            'title' => 'Technologie Quiz',
+            'content' => 'Test je kennis over technologie',
+        ]);
+        $quiz->save();
+        
     }
 }

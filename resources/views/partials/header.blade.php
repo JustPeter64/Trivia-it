@@ -6,7 +6,7 @@
         </button>
         <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link" href="{{ route('quizzen.index') }}">Quizzen</a>
+                <a class="nav-link" href="{{ route('quizzen.index') }}">Quizzes</a>
                 <a class="nav-link" href="/">Creator</a>
                 <a class="nav-link" href="{{ route('other.about') }}">About</a>
             </div>

@@ -19,6 +19,17 @@ class Quiz extends Model
         //tag_id is de foreign key van de pivot table
     }
 
+    //Dit is een Mutator
+    public function setTitleAttribute($value) {
+        $this->attributes['title'] = strtolower($value);
+    }
+
+    //Dit is een Accessor
+    public function getTitleAttribute($value) {
+        //Met ucfirst() zorg je ervoor dat de eerste letter van het eerste woord een hoofdletter wordt
+        return ucfirst($value);
+    }
+
     // public function questions()
     // {
     //     return $this->hasMany('App\Models\Question');
