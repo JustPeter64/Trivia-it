@@ -19,6 +19,10 @@ class Quiz extends Model
         //tag_id is de foreign key van de pivot table
     }
 
+    public function user() {
+        return $this->belongsTo('App\Models\User');
+    }
+
     //Dit is een Mutator
     public function setTitleAttribute($value) {
         $this->attributes['title'] = strtolower($value);

@@ -73,6 +73,11 @@ Route::get('quizzen/', [
 Route::get('about', function () {
     return view('other.about');
 })->name('other.about');
+
+
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::post('login', [
+    'uses' => 'App\Http\Controllers\SigningController@signin',
+    'as' => 'auth.signin'
+]);

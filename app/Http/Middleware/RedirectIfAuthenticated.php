@@ -21,7 +21,8 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                //Als de gebruiker al ingelogd is, dan is er geen reden om naar de login pagina te gaan bijvoorbeeld
+                return redirect('/'); 
             }
         }
 

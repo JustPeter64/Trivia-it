@@ -8,6 +8,15 @@
 
         @include('partials.errors')
 
+        @if (Session::has('error'))
+            <div class="row content">
+                <div class="col-md-6">
+                    <p><strong>error:</strong></p>
+                    <p class="alert alert-danger">{{ Session::get('error') }}</p>
+                </div>
+            </div>
+        @endif
+
         <div class="col-md-12">
             <form action="{{ route('admin.update') }}" method="post" class="form">
                 <div class="form-group">
@@ -26,25 +35,15 @@
                 </div> --}}
                 <div class="form-group">
                     <label for="content">content:</label>
-                    <textarea 
-                        name="content" 
-                        id="content" 
-                        class="form-control"
-                    >
+                    <textarea name="content" id="content" class="form-control">
                     {{ $quiz->content }}
                 </textarea>
                     @foreach ($tags as $tag)
                         <div class="checkbox">
                             <label>
-                                <input 
-                                    type="checkbox"
-                                    name="tags[]" 
-                                    value="{{ $tag->id }}"
-                                    {{ 
-                                        $quiz->tags->contains($tag->id) ? 'checked' : '' 
-                                    }}
-                                > 
-                                    {{ $tag->name }}
+                                <input type="checkbox" name="tags[]" value="{{ $tag->id }}"
+                                    {{ $quiz->tags->contains($tag->id) ? 'checked' : '' }}>
+                                {{ $tag->name }}
                             </label>
                     @endforeach
                 </div>
