@@ -9,11 +9,12 @@ Route::get('/', function () {
 });
 
 //admin routes
+//alleen toegankelijk voor admins
 //////////////////
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () {
     Route::get('', [
         'uses' => 'App\Http\Controllers\QuizController@getAdminIndex',
-        'as' => 'admin.index'
+        'as' => 'admin.index',
     ]);
     
     Route::get('create', [
@@ -44,10 +45,37 @@ Route::group(['prefix' => 'admin'], function () {
 
 //creator routes
 //////////////////
+Route::group(['prefix' => 'creator', 'middleware' => ['auth']], function () {
+    Route::get('', [
+        'uses' => 'App\Http\Controllers\QuizController@getCreatorIndex',
+        'as' => 'creator.index',
+    ]);
+    
+    Route::get('create', [
+        'uses' => 'App\Http\Controllers\QuizController@getCreatorCreate',
+        'as' => 'creator.create'
+    ]);
 
-Route::get('creator', function () {
-    return view('creator.index');
-})->name('creator.index');
+    Route::post('create', [
+        'uses' => 'App\Http\Controllers\QuizController@postCreatorCreate',
+        'as' => 'creator.create'
+    ]);
+
+    Route::get('delete/{id}', [
+        'uses' => 'App\Http\Controllers\QuizController@getCreatorDelete',
+        'as' => 'creator.delete'
+    ]);
+
+    Route::get('edit/{id}', [
+        'uses' => 'App\Http\Controllers\QuizController@getCreatorUpdate',
+        'as' => 'creator.edit'
+    ]);
+
+    Route::post('edit', [
+        'uses' => 'App\Http\Controllers\QuizController@postCreatorUpdate',
+        'as' => 'creator.update'
+    ]);
+});
 
 
 //quiz routes

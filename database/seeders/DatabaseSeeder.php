@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             // QuizTableSeeder::class,
             TagTableSeeder::class,
+            AdminUserSeeder::class,
         ]);
     }
 }

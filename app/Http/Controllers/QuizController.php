@@ -20,16 +20,6 @@ class QuizController extends Controller
         return view('quizzen.index', ['quizzes' => $quizzes]);
     }
 
-    //alle quizzes opvragen op admin pagina
-    public function getAdminIndex()
-    {
-        if(!Auth::check()) {
-            return redirect()->back();
-        }
-        $quizzes = Quiz::orderBy('title', 'asc')->get();
-        return view('admin.index', ['quizzes' => $quizzes]);
-    }
-
     //1 quiz opvragen
     public function getQuiz($id)
     {
@@ -48,12 +38,21 @@ class QuizController extends Controller
 
     }
 
+    ////////////////////////////
+    //Admin routes
+    ////////////////////////////
+
+    //alle quizzes opvragen op admin pagina
+    public function getAdminIndex()
+    {
+        $quizzes = Quiz::orderBy('title', 'asc')->get();
+        return view('admin.index', ['quizzes' => $quizzes]);
+    }
+
+    
     //1 quiz opvragen op admin pagina om te maken
     public function getAdminCreate()
     {
-        if(!Auth::check()) {
-            return redirect()->back();
-        }
         $tags = Tag::all();
         return view('admin.create', ['tags' => $tags]);
     }
@@ -61,9 +60,6 @@ class QuizController extends Controller
     //1 quiz opvragen op admin pagina om te editen  
     public function getAdminUpdate($id)
     {
-        if(!Auth::check()) {
-            return redirect()->back();
-        }
         $quiz = Quiz::find($id);
         $tags = Tag::all();
         return view('admin.edit', ['quiz' => $quiz, 'quizId' => $id, 'tags' => $tags]);
@@ -72,9 +68,6 @@ class QuizController extends Controller
     //Admin create post opdracht afhandelen
     public function postAdminCreate(Request $request)
     {
-        if(!Auth::check()) {
-            return redirect()->back();
-        }
         $this->validate($request, [ 
             'title' => 'required|min:5'
         ]);
@@ -96,9 +89,78 @@ class QuizController extends Controller
     //Admin update post opdracht afhandelen
     public function postAdminUpdate(Request $request)
     {
-        if(!Auth::check()) {
+        $this->validate($request, [ 
+            'title' => 'required|min:5'
+        ]);
+        $quiz = Quiz::find($request->input('id'));
+        $quiz->title = $request->input('title');
+        $quiz->content = $request->input('content');
+        $quiz->save();
+        $quiz->tags()->sync($request->input('tags') === null ? [] : $request->input('tags'));
+
+        return redirect()->route('admin.index')->with('info', 'Quiz updated: ' . $request->input('title'));
+    } 
+
+    public function getAdminDelete($id)
+    {
+        $quiz = Quiz::find($id);
+        $quiz->likes()->delete();
+        $quiz->tags()->detach();
+        $quiz->delete();
+        return redirect()->route('admin.index')->with('info', 'Quiz deleted!');
+    }
+
+    ////////////////////////////
+    //Creator routes
+    ////////////////////////////
+
+    //alle quizzes opvragen op Creator pagina
+    public function getCreatorIndex()
+    {
+        $quizzes = Quiz::orderBy('title', 'asc')->get();
+        return view('creator.index', ['quizzes' => $quizzes]);
+    }
+
+    
+    //1 quiz opvragen op Creator pagina om te maken
+    public function getCreatorCreate()
+    {
+        $tags = Tag::all();
+        return view('creator.create', ['tags' => $tags]);
+    }
+
+    //1 quiz opvragen op Creator pagina om te editen  
+    public function getCreatorUpdate($id)
+    {
+        $quiz = Quiz::find($id);
+        $tags = Tag::all();
+        return view('creator.edit', ['quiz' => $quiz, 'quizId' => $id, 'tags' => $tags]);
+    }
+
+    //Creator create post opdracht afhandelen
+    public function postCreatorCreate(Request $request)
+    {
+        $this->validate($request, [ 
+            'title' => 'required|min:5'
+        ]);
+        //kijken of de user ingelogd is en anders terugsturen
+        $user = Auth::user();
+        if (!$user) {
             return redirect()->back();
         }
+        $quiz = new Quiz([
+            'title' => $request->input('title'), 
+            'content' => $request->input('content')
+        ]);
+        $user->quizzes()->save($quiz);
+        $quiz->tags()->attach($request->input('tags') === null ? [] : $request->input('tags'));
+
+        return redirect()->route('creator.index')->with('info', 'Quiz created: ' . $request->input('title'));
+    }
+
+    //Creator update post opdracht afhandelen
+    public function postCreatorUpdate(Request $request)
+    {
         $this->validate($request, [ 
             'title' => 'required|min:5'
         ]);
@@ -111,14 +173,11 @@ class QuizController extends Controller
         $quiz->save();
         $quiz->tags()->sync($request->input('tags') === null ? [] : $request->input('tags'));
 
-        return redirect()->route('admin.index')->with('info', 'Quiz updated: ' . $request->input('title'));
+        return redirect()->route('creator.index')->with('info', 'Quiz updated: ' . $request->input('title'));
     } 
 
-    public function getAdminDelete($id)
+    public function getCreatorDelete($id)
     {
-        if(!Auth::check()) {
-            return redirect()->back();
-        }
         $quiz = Quiz::find($id);
         if (Gate::denies('manipulate-quiz', $quiz)) {
             return redirect()->back()->with('info', 'This quiz is not yours!');
@@ -126,6 +185,6 @@ class QuizController extends Controller
         $quiz->likes()->delete();
         $quiz->tags()->detach();
         $quiz->delete();
-        return redirect()->route('admin.index')->with('info', 'Quiz deleted!');
+        return redirect()->route('creator.index')->with('info', 'Quiz deleted!');
     }
 }

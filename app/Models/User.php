@@ -37,6 +37,7 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Quiz');
     }
 
+
     /**
      * The attributes that should be cast.
      *
