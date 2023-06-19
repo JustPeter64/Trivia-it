@@ -16,7 +16,6 @@
                         {{ $tag->name }}{{ $loop->last ? '' : ', ' }}
                     @endforeach
                 <p>{{ $quiz->description }}</p>
-                <p>{{ $quiz->content }}</p>
                 <p><a href="{{ route('quizzen.quiz', ['id' => $quiz->id]) }}">Start Quiz</a></p>
             </div>
         </div>

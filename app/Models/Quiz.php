@@ -4,7 +4,7 @@ use illuminate\Database\Eloquent\Model;
 
 class Quiz extends Model
 {
-    protected $fillable = ['title', 'content'];
+    protected $fillable = ['title', 'description', 'user_id'];
 
     public function likes() {
         return $this->hasMany('App\Models\Like', 'quiz_id');
@@ -23,10 +23,6 @@ class Quiz extends Model
         return $this->belongsTo('App\Models\User');
     }
 
-    public function likedBy(User $user) {
-        return $this->likes->contains('user_id', $user->id);
-    }
-
     //Dit is een Mutator
     public function setTitleAttribute($value) {
         $this->attributes['title'] = strtolower($value);
@@ -38,9 +34,9 @@ class Quiz extends Model
         return ucfirst($value);
     }
 
-    // public function questions()
-    // {
-    //     return $this->hasMany('App\Models\Question');
-    // }
+    public function questions()
+    {
+        return $this->hasMany('App\Models\Question');
+    }
 
 }

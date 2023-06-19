@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\Quiz;
 use App\Models\Like;
 use App\Models\Tag;
+use App\Models\Question;
+use App\Models\Answer;
 
 use Auth;
 use Gate;
@@ -23,7 +25,7 @@ class QuizController extends Controller
     //1 quiz opvragen
     public function getQuiz($id)
     {
-        $quiz = Quiz::where('id', $id)->with('likes')->first();
+        $quiz = Quiz::where('id', $id)->with('likes', 'questions', 'questions.answers')->first();
         return view('quizzen.quiz', ['quiz' => $quiz]);
 
     }
@@ -78,7 +80,7 @@ class QuizController extends Controller
         }
         $quiz = new Quiz([
             'title' => $request->input('title'), 
-            'content' => $request->input('content')
+            'description' => $request->input('description')
         ]);
         $user->quizzes()->save($quiz);
         $quiz->tags()->attach($request->input('tags') === null ? [] : $request->input('tags'));
@@ -92,9 +94,9 @@ class QuizController extends Controller
         $this->validate($request, [ 
             'title' => 'required|min:5'
         ]);
-        $quiz = Quiz::find($request->input('id'));
+        $quiz = Quiz::find($request->input('id'));      
         $quiz->title = $request->input('title');
-        $quiz->content = $request->input('content');
+        $quiz->description = $request->input('description');
         $quiz->save();
         $quiz->tags()->sync($request->input('tags') === null ? [] : $request->input('tags'));
 
@@ -134,7 +136,9 @@ class QuizController extends Controller
     {
         $quiz = Quiz::find($id);
         $tags = Tag::all();
-        return view('creator.edit', ['quiz' => $quiz, 'quizId' => $id, 'tags' => $tags]);
+        $questions = Question::where('quiz_id', $id)->get();
+        $answers = Answer::where('question_id', $id)->get();
+        return view('creator.edit', ['quiz' => $quiz, 'quizId' => $id, 'tags' => $tags, 'questions' => $questions, 'answers' => $answers]);
     }
 
     //Creator create post opdracht afhandelen
@@ -150,7 +154,9 @@ class QuizController extends Controller
         }
         $quiz = new Quiz([
             'title' => $request->input('title'), 
-            'content' => $request->input('content')
+            'description' => $request->input('description'),
+            'question' => $request->input('question'),
+            'answers' => $request->input('answers')
         ]);
         $user->quizzes()->save($quiz);
         $quiz->tags()->attach($request->input('tags') === null ? [] : $request->input('tags'));
@@ -169,7 +175,9 @@ class QuizController extends Controller
             return redirect()->back()->with('error', 'This quiz is not yours!');
         }
         $quiz->title = $request->input('title');
-        $quiz->content = $request->input('content');
+        $quiz->description = $request->input('description');
+        $quiz->question = $request->input('question');
+        $quiz->answers = $request->input('answers');
         $quiz->save();
         $quiz->tags()->sync($request->input('tags') === null ? [] : $request->input('tags'));
 
