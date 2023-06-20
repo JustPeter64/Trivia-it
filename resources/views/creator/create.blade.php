@@ -18,25 +18,29 @@
                 <input type="text" name="description" id="description" class="form-control">
             </div>
 
-            <div class="question">
-                <div class="form-group">
-                    <label for="question">Question:</label>
-                    <input type="text" name="question" id="question" class="form-control">
-                </div>
-
-                @for ($i = 1; $i < 5; $i++)
+            @for ($p = 1; $p < 11; $p++)
+                <div class="question">
                     <div class="form-group">
-                        <label for="answer{{ $i }}">Answer {{ $i }}:</label>
-                        <input type="text" name="answer{{ $i }}" id="answer{{ $i }}" class="form-control">
-                       
-                        <label for="correct{{ $i }}">Correct:</label>
-                        <select name="correct{{ $i }}" id="correct{{ $i }}">
-                            <option value="0">False</option>
-                            <option value="1">True</option>
-                        </select>
+                        <label for="question{{ $p }}">Question {{ $p }}:</label>
+                        <input type="text" name="question{{ $p }}" id="question{{ $p }}" class="form-control">
                     </div>
-                @endfor
-            </div>
+
+                    @for ($i = 1; $i < 5; $i++)
+                        <div class="form-group">
+                            <label for="answer{{ $p }}{{ $i }}">Answer {{ $i }}:</label>
+                            <input type="text" name="answer{{ $p }}{{ $i }}"
+                                id="answer{{ $p }}{{ $i }}" class="form-control">
+
+                            <label for="correct{{ $p }}{{ $i }}">Correct:</label>
+                            <select name="correct{{ $p }}{{ $i }}"
+                                id="correct{{ $p }}{{ $i }}">
+                                <option value="0">False</option>
+                                <option value="1">True</option>
+                            </select>
+                        </div>
+                    @endfor
+                </div>
+            @endfor
 
             <div class="tag-group">
                 <h3>Tags:</h3>

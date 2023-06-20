@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('answers', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('answer')->nullable();
-            $table->integer('correct')->nullable();
-            $table->integer('question_id');        
+            $table->string('answer');
+            $table->integer('correct');
+            $table->integer('question_id');   
         });
     }
 
