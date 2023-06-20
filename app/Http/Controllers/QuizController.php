@@ -25,7 +25,7 @@ class QuizController extends Controller
     //1 quiz opvragen
     public function getQuiz($id)
     {
-        $quiz = Quiz::where('id', $id)->with('likes', 'questions', 'questions.answers')->first();
+        $quiz = Quiz::where('id', $id)->with('likes')->first();
         return view('quizzen.quiz', ['quiz' => $quiz]);
 
     }
@@ -120,7 +120,9 @@ class QuizController extends Controller
     public function getCreatorIndex()
     {
         $quizzes = Quiz::orderBy('title', 'asc')->get();
-        return view('creator.index', ['quizzes' => $quizzes]);
+        $questions = Question::all();
+        $answers = Answer::all();
+        return view('creator.index', ['quizzes' => $quizzes, 'questions' => $questions, 'answers' => $answers]);
     }
 
     
@@ -152,13 +154,36 @@ class QuizController extends Controller
         if (!$user) {
             return redirect()->back();
         }
+        $questions = new Question([
+            'question' => $request->input('question')
+        ]);
+        $answer1 = new Answer([
+            'answer' => $request->input('answer1'),
+            'correct' => $request->input('correct1')
+        ]);
+        $answer2 = new Answer([
+            'answer' => $request->input('answer2'),
+            'correct' => $request->input('correct2')
+        ]);
+        $answer3 = new Answer([
+            'answer' => $request->input('answer3'),
+            'correct' => $request->input('correct3')
+        ]);
+        $answer4 = new Answer([
+            'answer' => $request->input('answer4'),
+            'correct' => $request->input('correct4')
+        ]);
         $quiz = new Quiz([
             'title' => $request->input('title'), 
             'description' => $request->input('description'),
-            'question' => $request->input('question'),
-            'answers' => $request->input('answers')
         ]);
         $user->quizzes()->save($quiz);
+        $quiz->questions()->save($questions);
+        $questions->answers()->save($answer1);
+        $questions->answers()->save($answer2);
+        $questions->answers()->save($answer3);
+        $questions->answers()->save($answer4);
+        
         $quiz->tags()->attach($request->input('tags') === null ? [] : $request->input('tags'));
 
         return redirect()->route('creator.index')->with('info', 'Quiz created: ' . $request->input('title'));
@@ -171,15 +196,21 @@ class QuizController extends Controller
             'title' => 'required|min:5'
         ]);
         $quiz = Quiz::find($request->input('id'));
+        $questions = Question::where('quiz_id', $request->input('id'));
+        $answers = Answer::where('question_id', $request->input('id'));
         if (Gate::denies('manipulate-quiz', $quiz)) {
             return redirect()->back()->with('error', 'This quiz is not yours!');
         }
         $quiz->title = $request->input('title');
         $quiz->description = $request->input('description');
-        $quiz->question = $request->input('question');
-        $quiz->answers = $request->input('answers');
         $quiz->save();
         $quiz->tags()->sync($request->input('tags') === null ? [] : $request->input('tags'));
+
+        $questions->question = $request->input('question');
+        $questions->save();
+
+        $answers->answer = $request->input('answer');
+        $answers->save();
 
         return redirect()->route('creator.index')->with('info', 'Quiz updated: ' . $request->input('title'));
     } 
@@ -187,12 +218,16 @@ class QuizController extends Controller
     public function getCreatorDelete($id)
     {
         $quiz = Quiz::find($id);
+        $questions = Question::where('quiz_id', $id);
+        $answers = Answer::where('question_id', $id);
         if (Gate::denies('manipulate-quiz', $quiz)) {
             return redirect()->back()->with('info', 'This quiz is not yours!');
         }
         $quiz->likes()->delete();
         $quiz->tags()->detach();
         $quiz->delete();
+        $questions->delete();
+        $answers->delete();
         return redirect()->route('creator.index')->with('info', 'Quiz deleted!');
     }
 }

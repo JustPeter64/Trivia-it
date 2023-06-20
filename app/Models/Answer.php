@@ -10,10 +10,10 @@ class Answer extends Model
     use HasFactory;
 
     // een antwoord kan juist of fout zijn (boolean)
-    protected $fillable = ['answer', 'correct'];
+    protected $fillable = ['answer', 'correct', 'question_id'];
 
     public function question()
     {
-        return $this->belongsTo('App\Models\Question');
+        return $this->belongsTo('App\Models\Question', 'question_id');
     }
 }

@@ -19,6 +19,11 @@ class Quiz extends Model
         //tag_id is de foreign key van de pivot table
     }
 
+    public function questions()
+    {
+        return $this->hasMany('App\Models\Question', 'quiz_id');
+    }
+
     public function user() {
         return $this->belongsTo('App\Models\User');
     }
@@ -33,10 +38,4 @@ class Quiz extends Model
         //Met ucfirst() zorg je ervoor dat de eerste letter van het eerste woord een hoofdletter wordt
         return ucfirst($value);
     }
-
-    public function questions()
-    {
-        return $this->hasMany('App\Models\Question');
-    }
-
 }

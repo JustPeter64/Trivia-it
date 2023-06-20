@@ -9,13 +9,15 @@ class Question extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['question', 'quiz_id'];
+
     public function quiz()
     {
-        return $this->belongsTo('App\Models\Quiz');
+        return $this->belongsTo('App\Models\Quiz', 'quiz_id');
     }
 
     public function answers()
     {
-        return $this->hasMany('App\Models\Answer');
+        return $this->hasMany('App\Models\Answer', 'question_id');
     }
 }

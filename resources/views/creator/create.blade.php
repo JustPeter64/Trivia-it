@@ -18,28 +18,25 @@
                 <input type="text" name="description" id="description" class="form-control">
             </div>
 
-            @for ($i = 0; $i < 2; $i++)
-                <hr>
+            <div class="question">
                 <div class="form-group">
                     <label for="question">Question:</label>
                     <input type="text" name="question" id="question" class="form-control">
                 </div>
 
-                @for ($j = 0; $j < 4; $j++)
-                    <div class="form-group- answer">
-                        <label for="answer">Answer:</label>
-                        <input type="text" name="answer" id="answer" class="form-control">
-
-                        <div class="correct-group">
-                            <label for="correct">Dit is het juiste antwoord</label>
-                            <input type="checkbox" name="correct" id="correct" class="form-control">
-                        </div>
+                @for ($i = 1; $i < 5; $i++)
+                    <div class="form-group">
+                        <label for="answer{{ $i }}">Answer {{ $i }}:</label>
+                        <input type="text" name="answer{{ $i }}" id="answer{{ $i }}" class="form-control">
+                       
+                        <label for="correct{{ $i }}">Correct:</label>
+                        <select name="correct{{ $i }}" id="correct{{ $i }}">
+                            <option value="0">False</option>
+                            <option value="1">True</option>
+                        </select>
                     </div>
                 @endfor
-            @endfor
-
-
-
+            </div>
 
             <div class="tag-group">
                 <h3>Tags:</h3>
@@ -97,7 +94,7 @@
 
     }
 
-    .answer {
+    .question {
         border: 1px solid #ccc;
     }
 </style>
