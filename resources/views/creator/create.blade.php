@@ -18,11 +18,12 @@
                 <input type="text" name="description" id="description" class="form-control">
             </div>
 
-            @for ($p = 1; $p < 11; $p++)
+            @for ($p = 1; $p < 4; $p++)
                 <div class="question">
                     <div class="form-group">
                         <label for="question{{ $p }}">Question {{ $p }}:</label>
-                        <input type="text" name="question{{ $p }}" id="question{{ $p }}" class="form-control">
+                        <input type="text" name="question{{ $p }}" id="question{{ $p }}"
+                            class="form-control">
                     </div>
 
                     @for ($i = 1; $i < 5; $i++)
@@ -60,7 +61,6 @@
 @endsection
 
 <style>
-    /* style de flexbox met tags zo dat het overzichtelijk en leesbaar is */
     .tag-group {
         display: flex;
         flex-wrap: wrap;

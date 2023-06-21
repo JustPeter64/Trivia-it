@@ -96,6 +96,11 @@ Route::get('quizzen/', [
     'as' => 'quizzen.index'
 ]);
 
+Route::post('quiz/{id}', [
+    'uses' => 'App\Http\Controllers\QuizController@postQuiz',
+    'as' => 'quizzen.quiz'
+]);
+
 //other routes
 //////////////////
 Route::get('about', function () {

@@ -21,19 +21,27 @@
     </div>
     <div class="col-md">
         <div class="col-md content">
+
+            @if (session('info'))
+                <div class="alert alert-info">
+                    {{ session('info') }}
+                </div>
+            @endif
+            
             <h3>Questions:</h3>
             @foreach ($quiz->questions as $question)
-                <div class="question">
+                <form class="question" action="{{ route('quizzen.quiz.result', ['id' => $quiz->id]) }}" method="post">
                     <p>{{ $question->question }}</p>
                     @foreach ($question->answers as $answer)
                         <div class="answer">
                             <input type="hidden" name="answer_id" value="{{ $answer->id }}">
                             <input type="hidden" name="correct" value="{{ $answer->correct }}">
+
                             <input type="checkbox" name="answer" id="answer">
                             <label for="answer">{{ $answer->answer }}</label>
                         </div>
                     @endforeach
-                </div>
+                </form>
             @endforeach
         </div>
     </div>

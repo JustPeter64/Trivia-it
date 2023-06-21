@@ -30,6 +30,32 @@ class QuizController extends Controller
 
     }
 
+    //1 quiz post opdracht afhandelen
+    public function postQuiz(Request $request)
+    {
+        $this->validate($request, [ 
+            'answer' => 'required'
+        ]);
+        $quiz = Quiz::find($request->input('quiz_id'));
+        if (!$quiz) {
+            return redirect()->route('quizzen.index')->with('info', 'That quiz does not exist!');
+        }
+        $answer = Answer::find($request->input('answer'));
+        if (!$answer) {
+            return redirect()->route('quizzen.quiz', ['id' => $request->input('quiz_id')])->with('info', 'That answer does not exist!');
+        }
+        $user = Auth::user();
+        $user->answers()->attach($request->input('answer'));
+
+        if ($answer->correct) {
+            $user->points += 1;
+            $user->save();
+            return redirect()->route('quizzen.quiz', ['id' => $request->input('quiz_id')])->with('info', 'Correct! You have ' . $user->points . ' points!');
+        }
+
+        return redirect()->route('quizzen.quiz', ['id' => $request->input('quiz_id')])->with('info', 'Your answer was submitted!');
+    }
+
     //1 quiz liken
     public function getLikeQuiz($id)
     {
@@ -147,8 +173,26 @@ class QuizController extends Controller
     public function postCreatorCreate(Request $request)
     {
         $this->validate($request, [ 
-            'title' => 'required|min:5'
+            'title' => 'required|min:5',
+
+            'question1' => 'required|min:5',
+            'question2' => 'required|min:5',
+            'question3' => 'required|min:5',
+
+            'answer11' => 'required',
+            'answer12' => 'required',
+            'answer13' => 'required',
+            'answer14' => 'required',
+            'answer21' => 'required',
+            'answer22' => 'required',
+            'answer23' => 'required',
+            'answer24' => 'required',
+            'answer31' => 'required',
+            'answer32' => 'required',
+            'answer33' => 'required',
+            'answer34' => 'required',
         ]);
+        
         //kijken of de user ingelogd is en anders terugsturen
         $user = Auth::user();
         if (!$user) {
@@ -170,27 +214,7 @@ class QuizController extends Controller
         $question3 = new Question([
             'question' => $request->input('question3')
         ]);
-        $question4 = new Question([
-            'question' => $request->input('question4')
-        ]);
-        $question5 = new Question([
-            'question' => $request->input('question5')
-        ]);
-        $question6 = new Question([
-            'question' => $request->input('question6')
-        ]);
-        $question7 = new Question([
-            'question' => $request->input('question7')
-        ]);
-        $question8 = new Question([
-            'question' => $request->input('question8')
-        ]);
-        $question9 = new Question([
-            'question' => $request->input('question9')
-        ]);
-        $question10 = new Question([
-            'question' => $request->input('question10')
-        ]);
+
 
         $answer11 = new Answer([
             'answer' => $request->input('answer11'),
@@ -254,157 +278,7 @@ class QuizController extends Controller
             'correct' => $request->input('correct34'),
             'question_id' => $question3->id
         ]);
-
-        $answer41 = new Answer([
-            'answer' => $request->input('answer41'),
-            'correct' => $request->input('correct41'),
-            'question_id' => $question4->id
-        ]);
-        $answer42 = new Answer([
-            'answer' => $request->input('answer42'),
-            'correct' => $request->input('correct42'),
-            'question_id' => $question4->id
-        ]);
-        $answer43 = new Answer([
-            'answer' => $request->input('answer43'),
-            'correct' => $request->input('correct43'),
-            'question_id' => $question4->id
-        ]);
-        $answer44 = new Answer([
-            'answer' => $request->input('answer44'),
-            'correct' => $request->input('correct44'),
-            'question_id' => $question4->id
-        ]);
-
-        $answer51 = new Answer([
-            'answer' => $request->input('answer51'),
-            'correct' => $request->input('correct51'),
-            'question_id' => $question5->id
-        ]);
-        $answer52 = new Answer([
-            'answer' => $request->input('answer52'),
-            'correct' => $request->input('correct52'),
-            'question_id' => $question5->id
-        ]);
-        $answer53 = new Answer([
-            'answer' => $request->input('answer53'),
-            'correct' => $request->input('correct53'),
-            'question_id' => $question5->id
-        ]);
-        $answer54 = new Answer([
-            'answer' => $request->input('answer54'),
-            'correct' => $request->input('correct54'),
-            'question_id' => $question5->id
-        ]);
-
-        $answer61 = new Answer([
-            'answer' => $request->input('answer61'),
-            'correct' => $request->input('correct61'),
-            'question_id' => $question6->id
-        ]);
-        $answer62 = new Answer([
-            'answer' => $request->input('answer62'),
-            'correct' => $request->input('correct62'),
-            'question_id' => $question6->id
-        ]);
-        $answer63 = new Answer([
-            'answer' => $request->input('answer63'),
-            'correct' => $request->input('correct63'),
-            'question_id' => $question6->id
-        ]);
-        $answer64 = new Answer([
-            'answer' => $request->input('answer64'),
-            'correct' => $request->input('correct64'),
-            'question_id' => $question6->id
-        ]);
-
-        $answer71 = new Answer([
-            'answer' => $request->input('answer71'),
-            'correct' => $request->input('correct71'),
-            'question_id' => $question7->id
-        ]);
-        $answer72 = new Answer([
-            'answer' => $request->input('answer72'),
-            'correct' => $request->input('correct72'),
-            'question_id' => $question7->id
-        ]);
-        $answer73 = new Answer([
-            'answer' => $request->input('answer73'),
-            'correct' => $request->input('correct73'),
-            'question_id' => $question7->id
-        ]);
-        $answer74 = new Answer([
-            'answer' => $request->input('answer74'),
-            'correct' => $request->input('correct74'),
-            'question_id' => $question7->id
-        ]);
-
-        $answer81 = new Answer([
-            'answer' => $request->input('answer81'),
-            'correct' => $request->input('correct81'),
-            'question_id' => $question8->id
-        ]);
-        $answer82 = new Answer([
-            'answer' => $request->input('answer82'),
-            'correct' => $request->input('correct82'),
-            'question_id' => $question8->id
-        ]);
-        $answer83 = new Answer([
-            'answer' => $request->input('answer83'),
-            'correct' => $request->input('correct83'),
-            'question_id' => $question8->id
-        ]);
-        $answer84 = new Answer([
-            'answer' => $request->input('answer84'),
-            'correct' => $request->input('correct84'),
-            'question_id' => $question8->id
-        ]);
-
-        $answer91 = new Answer([
-            'answer' => $request->input('answer91'),
-            'correct' => $request->input('correct91'),
-            'question_id' => $question9->id
-        ]);
-        $answer92 = new Answer([
-            'answer' => $request->input('answer92'),
-            'correct' => $request->input('correct92'),
-            'question_id' => $question9->id
-        ]);
-        $answer93 = new Answer([
-            'answer' => $request->input('answer93'),
-            'correct' => $request->input('correct93'),
-            'question_id' => $question9->id
-        ]);
-        $answer94 = new Answer([
-            'answer' => $request->input('answer94'),
-            'correct' => $request->input('correct94'),
-            'question_id' => $question9->id
-        ]);
-
-        $answer101 = new Answer([
-            'answer' => $request->input('answer101'),
-            'correct' => $request->input('correct101'),
-            'question_id' => $question10->id
-        ]);
-        $answer102 = new Answer([
-            'answer' => $request->input('answer102'),
-            'correct' => $request->input('correct102'),
-            'question_id' => $question10->id
-        ]);
-        $answer103 = new Answer([
-            'answer' => $request->input('answer103'),
-            'correct' => $request->input('correct103'),
-            'question_id' => $question10->id
-        ]);
-        $answer104 = new Answer([
-            'answer' => $request->input('answer104'),
-            'correct' => $request->input('correct104'),
-            'question_id' => $question10->id
-        ]);
-
-    
-
-
+   
         $user->quizzes()->save($quiz);
 
         $quiz->tags()->attach($request->input('tags') === null ? [] : $request->input('tags'));
@@ -412,13 +286,6 @@ class QuizController extends Controller
         $quiz->questions()->save($question1);
         $quiz->questions()->save($question2);
         $quiz->questions()->save($question3);
-        $quiz->questions()->save($question4);
-        $quiz->questions()->save($question5);
-        $quiz->questions()->save($question6);
-        $quiz->questions()->save($question7);
-        $quiz->questions()->save($question8);
-        $quiz->questions()->save($question9);
-        $quiz->questions()->save($question10);
     
         $question1->answers()->save($answer11);
         $question1->answers()->save($answer12);
@@ -435,41 +302,6 @@ class QuizController extends Controller
         $question3->answers()->save($answer33);
         $question3->answers()->save($answer34);
 
-        $question4->answers()->save($answer41);
-        $question4->answers()->save($answer42);
-        $question4->answers()->save($answer43);
-        $question4->answers()->save($answer44);
-
-        $question5->answers()->save($answer51);
-        $question5->answers()->save($answer52);
-        $question5->answers()->save($answer53);
-        $question5->answers()->save($answer54);
-
-        $question6->answers()->save($answer61);
-        $question6->answers()->save($answer62);
-        $question6->answers()->save($answer63);
-        $question6->answers()->save($answer64);
-
-        $question7->answers()->save($answer71);
-        $question7->answers()->save($answer72);
-        $question7->answers()->save($answer73);
-        $question7->answers()->save($answer74);
-
-        $question8->answers()->save($answer81);
-        $question8->answers()->save($answer82);
-        $question8->answers()->save($answer83);
-        $question8->answers()->save($answer84);
-
-        $question9->answers()->save($answer91);
-        $question9->answers()->save($answer92);
-        $question9->answers()->save($answer93);
-        $question9->answers()->save($answer94);
-
-        $question10->answers()->save($answer101);
-        $question10->answers()->save($answer102);
-        $question10->answers()->save($answer103);
-        $question10->answers()->save($answer104);
-
         return redirect()->route('creator.index')->with('info', 'Quiz created: ' . $request->input('title'));
     }
 
@@ -477,25 +309,29 @@ class QuizController extends Controller
     public function postCreatorUpdate(Request $request)
     {
         $this->validate($request, [ 
-            'title' => 'required|min:5'
+            'title' => 'required|min:5',
         ]);
+
         $quiz = Quiz::find($request->input('id'));
         $questions = Question::where('quiz_id', $request->input('id'));
         $answers = Answer::where('question_id', $request->input('id'));
+   
         if (Gate::denies('manipulate-quiz', $quiz)) {
             return redirect()->back()->with('error', 'This quiz is not yours!');
         }
         $quiz->title = $request->input('title');
         $quiz->description = $request->input('description');
+
+        $questions->save();
+        // $questions->save([
+        //     'question' => $request->input('question1'),
+        //     'question' => $request->input('question2'),
+        //     'question' => $request->input('question3')
+        // ]);   
+
         $quiz->save();
         $quiz->tags()->sync($request->input('tags') === null ? [] : $request->input('tags'));
-
-        $questions->question = $request->input('question');
-        $questions->save();
-
-        $answers->answer = $request->input('answer');
-        $answers->save();
-
+        
         return redirect()->route('creator.index')->with('info', 'Quiz updated: ' . $request->input('title'));
     } 
 
