@@ -13,7 +13,6 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            // QuizTableSeeder::class,
             TagTableSeeder::class,
             AdminUserSeeder::class,
         ]);
